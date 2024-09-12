@@ -32,15 +32,15 @@ pig_latin = list()
 # iterate through words in sentence changing each element as necessary
 # put each new word in a list that we will re-assemble
 for word in words:
-
     # word is too short. Do nothing.
     if len(word) < 3:
-        # place the word in the pig_latin list
-        ### your code here ###
+        pig_latin.append(word)
+
         continue
 
     # starts with vowel, modify accordingly and put in list
     elif starts_with_vowel(word) == True:
+        pig_latin.append(word + "vay")
         # modify the word and place in pig_latin list
         ### your code here ###
         continue
@@ -49,6 +49,9 @@ for word in words:
     else:
         # modify word and place in pig_latin list
         ### your code here ###
+        change = word[1:] + word[0] + "ay"
+        pig_latin.append(change)
+
         continue
 
 # a new sentence in which you will re-assemble each of the modified words
