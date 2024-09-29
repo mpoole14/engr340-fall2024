@@ -52,30 +52,41 @@ def parse_tensile_file(path_to_file):
 
 
 def calculate_stress(force, sample_diameter):
-    """
-    Calculate the stress (MPa) experienced by the test given a series of forces/loads (kN) and
-    a sample diameter (mm)
-    :param force: An array of forces/loads applied to the sample in Kilo Newtons (kN)
-    :param sample_diameter: The diameter of the sample in millimeters (mm)
-    :return: An array of stresses experienced by the sample in Kilo Pascals (KPa)
-    """
 
-    # calculate the cross-section area (mm^2)
-    ### your code here ###
+
+    ### YOUR SOLUTION FROM STEP 1 TEMPLATE HERE ###
     pi_value = np.pi
-    radius = sample_diameter/2
-
-    cross_area = (pi_value) *(radius ** 2)
+    radius = sample_diameter / 2
+    cross_area = (pi_value) * (radius ** 2)
 
     # calculate stress (MPa) from load (kN) and cross-sectional area
     ### your code here ###
     force_newtons = force * 1000
-    stress = (force_newtons / cross_area) * (10**-6)
+    stress = (force_newtons / cross_area) * (10 ** -6)
 
     # delete this line and replace it with your own
 
 
     return stress
+
+
+def calculate_max_strength_strain(strain, stress):
+    """
+    Calculate the Ultimate Tensile Stress and Fracture Strain
+    :param strain: An array of Strain data (MPa)
+    :param stress: An array of Strain data
+    :return:
+    Ultimate Tensile Stress: the maximum stress experienced
+    Fracture Strain: the maximum strain experienced before fracture
+    """
+
+    # calculate the maximum stress experienced
+    ultimate_tensile_stress = np.max(stress)
+
+    # calculate the maximum strain experienced
+    fracture_strain = np.max(strain)
+
+    return ultimate_tensile_stress, fracture_strain
 
 
 
@@ -114,3 +125,16 @@ if __name__ == "__main__":
     plt.ylabel('Stress (MPa)')
     plt.title('Stress-Strain Curve for Sample ' + sample_name)
     plt.show()
+
+    # Step #2: Calculate basic parameters such as the ultimate tensile strength
+    # and fracture strain
+
+    # calculate easy variables
+    ultimate_tensile_strength, fracture_strain = calculate_max_strength_strain(strain, stress)
+
+    if ultimate_tensile_strength==-1 or fracture_strain ==-1:
+        print("Error! Tensile Strength or Fracture Strain returned as -1. Did you complete the calculate_max_strength() method?")
+        sys.exit(-1)
+
+    print("Ultimate Tensile Stress is ", ultimate_tensile_strength, "MPa")
+    print("Fracture Strain is ", 100 * fracture_strain, " percent")
