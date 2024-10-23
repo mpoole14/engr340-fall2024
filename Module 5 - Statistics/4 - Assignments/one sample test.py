@@ -1,3 +1,5 @@
+from fileinput import filename
+
 import numpy as np
 from scipy.stats import ttest_1samp, norm, ttest_ind
 
@@ -32,31 +34,34 @@ def one_sample_tests(_files: list, _mean: float, _alpha: float, _less_than: bool
     """
 
     # list of files that are out of spec
-    reject_null_hypothesis = []
+reject_null_hypothesis = []
 
     # YOUR CODE HERE #
-    for file in _files:
-        try:
-            data = np.loadtxt(file)
-            t_stat, p_value = ttest_1samp(data, _mean)
-            if _less_than:
-                if t_stat < 0:
-                    p_value /= 2
-                else:
-                    p_value = 1
-            else:
-                if t_stat > 0:
-                    p_value /= 2
-                else:
-                    p_value = 1
-            if p_value < _alpha:
-                reject_null_hypothesis.append(file)
-        except Exception as e:
-            print ("error")
+for file in filter:
+    try:
+        # Load the data from the file
+        data = np.loadtxt(file)
 
+        # Perform a one-sample t-test
+        t_stat, p_value = ttest_1samp(data, mean)
 
-    # return samples that were rejected
-    return reject_null_hypothesis
+        # Adjust p-value for one-sided test
+        if less_than:
+            # Left-sided test: Check if t-statistic is negative
+            if t_stat < 0:
+                p_value /= 2
+        else:
+            # Right-sided test: Check if t-statistic is positive
+            if t_stat > 0:
+                p_value /= 2
+
+        # Reject the null hypothesis if the p-value is less than alpha
+        if p_value < alpha:
+            reject_null_hypothesis.append(file)
+
+    except Exception as e:
+        print(f"Error processing file {file}: {e}")
+
 
 
 if __name__ == "__main__":

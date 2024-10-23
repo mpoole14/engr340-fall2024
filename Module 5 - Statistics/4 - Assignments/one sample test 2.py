@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import ttest_1samp, norm, ttest_ind
+import pandas as pa
 
 
 def write_to_csv(filename: str, data):
@@ -37,23 +38,32 @@ def one_sample_tests(_files: list, _mean: float, _alpha: float, _less_than: bool
     # YOUR CODE HERE #
     for file in _files:
         try:
+            # Load the data from the file
             data = np.loadtxt(file)
+
+            # Perform a one-sample t-test
             t_stat, p_value = ttest_1samp(data, _mean)
+
+            # Adjust the p-value for one-sided test
             if _less_than:
+                # Left-sided test: Check if t-statistic is negative
                 if t_stat < 0:
                     p_value /= 2
                 else:
-                    p_value = 1
+                    p_value = 1  # Force p-value to be high if it's not less than
             else:
+                # Right-sided test: Check if t-statistic is positive
                 if t_stat > 0:
                     p_value /= 2
                 else:
-                    p_value = 1
+                    p_value = 1  # Force p-value to be high if it's not greater than
+
+            # Reject the null hypothesis if the p-value is less than alpha
             if p_value < _alpha:
                 reject_null_hypothesis.append(file)
-        except Exception as e:
-            print ("error")
 
+        except Exception as e:
+            print(f"Error processing file {file}: {e}")
 
     # return samples that were rejected
     return reject_null_hypothesis
