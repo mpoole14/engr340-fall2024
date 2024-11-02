@@ -1,4 +1,3 @@
-
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -9,14 +8,13 @@ path = '../../../data/ekg/mitdb_201.csv'
 # load data in matrix from CSV file; skip first two rows
 
 ### Your code here ###
-np.loadtxt(path, delimiter=',', skiprows=2)
-
+data = np.loadtxt(path, delimiter=',', skiprows=2)
 
 # save each vector as own variable
 
 ### Your code here ###
-time = data[:, 0]      # First column for time
-signal = data[:, 1]    # Second column for signal
+time = data[:, 0]      
+signal = data[:, 1]
 
 # Plot the EKG signal over time using Matplotlib
 plt.figure(figsize=(10, 5))
@@ -27,5 +25,3 @@ plt.title('EKG Signal over Time')
 plt.legend()
 plt.grid(True)
 plt.show()
-
-

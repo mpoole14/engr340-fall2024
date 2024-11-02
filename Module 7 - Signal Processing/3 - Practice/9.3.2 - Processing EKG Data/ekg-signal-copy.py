@@ -24,18 +24,10 @@ data = np.loadtxt(signal_filepath, delimiter=',', skiprows=2)
 time = data[:, 0]
 signal = data[:, 1]
 
-"""
-Step 2: (OPTIONAL) pass data through LOW PASS FILTER (fs=250Hz, fc=15, N=6). These may not be correctly in radians
-"""
-
-## YOUR CODE HERE ##
-fs = 250
-fc = 15
-n = 6
 
 
 """
-Step 3: Pass data through weighted differentiator
+Step 2: Pass data through weighted differentiator
 """
 
 ## YOUR CODE HERE ##
@@ -43,17 +35,22 @@ differentiated_signal = np.convolve(signal, [1, -1], mode='same')
 
 
 """
-Step 4: Square the results of the previous step
+Step 3: Square the results of the previous step
 """
  ## YOUR CODE HERE ##
 squared_signal = differentiated_signal ** 2
 
 """
-Step 5: Pass a moving filter over your data
+Step 4: Pass a moving filter over your data
 """
 
 ## YOUR CODE HERE
+window_size = 30
+moving_average_signal = np.convolve(squared_signal, np.ones(window_size)/window_size, mode='same')
+
 # make a plot of the results. Can change the plot() parameter below to show different intermediate signals
 plt.title('Process Signal for ' + database_name)
-plt.plot(squared_signal)
+plt.plot(time, moving_average_signal)
+plt.xlabel("Time")
+plt.ylabel("Signal")
 plt.show()
