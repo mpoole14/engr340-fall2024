@@ -8,7 +8,9 @@ Preamble: Load data from source CSV file
 """
 ### YOUR CODE HERE
 path = 'data/drop-jump/all_participant_data_rsi.csv'
-np.loadtxt(path, delimiter=',')
+data = pd.read_csv(path)
+print(data.head())
+
 
 """
 Question 1: Load the force plate and acceleration based RSI data for all participants. Map each data set (accel and FP)
@@ -18,7 +20,13 @@ probability distribution function. Include appropriate labels, titles, and legen
 print('-----Question 1-----')
 
 ### YOUR CODE HERE
-
+accel_data = data['accelerometer_rsi']
+fp_data = data['force_plate_rsi']
+accel_av = np.mean(accel_data)
+accel_std = np.std(accel_data)
+fp_av = np.mean(fp_data)
+fp_std = np.std(fp_data)
+print (f"Accelerometer Data: Mean = {accel_av}, Standard Deviation = {accel_std}")
 
 """
 Question 2: Conduct a Chi2 Goodness of Fit Test for each dataset to test whether the data is a good fit

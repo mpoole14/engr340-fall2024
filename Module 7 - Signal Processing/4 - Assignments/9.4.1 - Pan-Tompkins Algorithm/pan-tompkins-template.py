@@ -16,13 +16,17 @@ def detect_heartbeats(filepath):
 
     # load data in matrix from CSV file; skip first two rows
     ## your code here
+    np.loadtxt(path, delimiter=',', skiprows=2)
 
     # save each vector as own variable
     ## your code here
+    time = data[:, 0]  # First column for time
+
 
     # identify one column to process. Call that column signal
 
-    signal = -1 ## your code here
+    signal = data[:, 1]  # Second column for signal
+    ## your code here
 
     # pass data through LOW PASS FILTER (OPTIONAL)
     ## your code here
